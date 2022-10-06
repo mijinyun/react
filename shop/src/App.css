@@ -1,0 +1,6 @@
+.main-bg {
+    height: 500px;
+    background-image: url('./main.jpg');
+    background-size: cover;
+    background-position: center;
+}

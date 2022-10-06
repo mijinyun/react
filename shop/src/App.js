@@ -5,6 +5,7 @@ import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/detail';
 import Product from './product';
+import Cart from './routes/Cart'
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
           <Route path='two' element={<h5>생일기념 쿠폰받기</h5>} />
         </Route>
         <Route path='/detail/:id' element={<Detail shoes={shoes}/>} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<div>없는 페이지</div>}/>
       </Routes>
     </div>

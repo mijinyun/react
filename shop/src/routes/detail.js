@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // import Product from '../product';
 import { Nav } from 'react-bootstrap'
 
+
+import {Context1} from './../App.js'; //App.js에서 보관함 가져오기.
+
+
 const Detail = (props) => {
 
+    let {재고} = useContext(Context1) //state사용2. useContext(Context) 보관함을 해체해주는것. 변수를 써주거나, disturcting 해서 쓰면 됨. {재고, shoes}
 
     useEffect(() => {
       setTimeout(() => {
@@ -46,6 +51,8 @@ const Detail = (props) => {
 
         {/* <useEffect 설명용> */}
         {count}
+
+        {재고}
         <button onClick={()=> { setCount(count+1) }}>버튼</button>
         <div className="row">
           <div className="col-md-6">
@@ -77,23 +84,41 @@ const Detail = (props) => {
             <Nav.Link eventKey="link2" onClick={() => 탭변경(2)}>버튼2</Nav.Link>
           </Nav.Item>
         </Nav>
-        <TabContent 탭={탭}/>
+        <TabContent 탭={탭} shoes={props.shoes}/>
 
       </div>
     </>
     )
 }
 
-function TabContent(props) {
-  if (props.탭 === 0) {
-    return <div>내용0</div>
-  }
-  if (props.탭 === 1 ) {
-    return <div>내용1</div>
-  }
-  if (props.탭 === 2) {
-    return <div>내용2</div>
-  }
+function TabContent({탭}) {
+
+  let [fade, setFade] = useState('');
+  let {재고} = useContext(Context1)
+
+  useEffect(() => {
+    setTimeout(() => { setFade('end')}, 10)
+    return () => {
+      setFade('')
+    }
+  },[탭])
+
+  return (
+    <div className={'start' + fade}>
+      { [<div>{재고}</div>,<div>내용1</div>,<div>내용2</div>][탭]}
+    </div>
+  )
+
+
+  // if (props.탭 === 0) {
+  //   return <div>내용0</div>
+  // }
+  // if (props.탭 === 1 ) {
+  //   return <div>내용1</div>
+  // }
+  // if (props.탭 === 2) {
+  //   return <div>내용2</div>
+  // }
 
   // return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][props.탭]  이렇게하면 더 간단하다!!!!!!!!!!!!!
 }

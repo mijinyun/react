@@ -1,13 +1,20 @@
 import {Table} from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeName, PlusAge, PlusAge2 } from '../store/userSlice';
+import { Plus } from '../store';
 
 function Cart() {
 
-    let products = useSelector((state) => {return state.products}) //store에 있는 state를 꺼내쓰는 것.
-    console.log(products);
+    let state = useSelector((state) => {return state}) //store에 있는 state를 꺼내쓰는 것.
+    let dispatch = useDispatch();
 
     return (
+        
         <div>
+            <h6>{state.user.name}</h6>
+            <h6>{state.user.age}</h6>
+            <button onClick={() => {dispatch(PlusAge())}}>버튼</button>
+            <button onClick={() => {dispatch(PlusAge2(100))}}>버튼2</button>
             <Table>
                 <thead>
                     <tr>
@@ -19,13 +26,16 @@ function Cart() {
                 </thead>
                 <tbody>
                     {
-                        products.map((product) => {
+                        state.products.map((product) => {
                             return (
                                 <tr>
                                     <th>{product.id}</th>
                                     <th>{product.name}</th>
                                     <th>{product.count}</th>
-                                    <th></th>
+                                    <th><button onClick={() => 
+                                    //state 누르면 john kim 으로 변경하려면
+                                    dispatch(Plus())
+                                    }>+</button></th>
                                 </tr>
                             )
                         })

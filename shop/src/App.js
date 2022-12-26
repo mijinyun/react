@@ -1,6 +1,6 @@
 import './App.css';
 import { Navbar, Container, Nav } from 'react-bootstrap'
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/detail';
@@ -12,6 +12,11 @@ export let Context1 = createContext(); //셋팅1. context를 만들어주는 것
 
 
 function App() {
+
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify([]))
+  },[])
+
 
   let [shoes,setShoes] = useState(data);
   let [재고] = useState([10,11,12]); //detail, tabContent에서 쓰고싶으면? - context api 써보기

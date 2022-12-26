@@ -40,6 +40,14 @@ const Detail = (props) => {
     // let 찾은상품 = props.shoes.find(function(x){ return x.id == id});
     // console.log(찾은상품);
 
+    useEffect(() => {
+      let watched_items = localStorage.getItem('watched');
+      watched_items = JSON.parse(watched_items);
+      watched_items.push(keyId);
+      watched_items = new Set(watched_items);
+      watched_items = Array.from(watched_items);
+      localStorage.setItem('watched', JSON.stringify(watched_items));
+    },[]);
 
     return(
     <>

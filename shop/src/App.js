@@ -14,7 +14,9 @@ export let Context1 = createContext(); //셋팅1. context를 만들어주는 것
 function App() {
 
   useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify([]))
+    if (localStorage.getItem('watched'  != undefined)) {
+      localStorage.setItem('watched', JSON.stringify([]));
+    }
   },[])
 
 

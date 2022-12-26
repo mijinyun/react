@@ -42,15 +42,38 @@ let products = createSlice({
     {id : 2, name : 'Grey Yordan', count : 1}
   ],
 
-  reducers: {
-    Plus(state) {
-      console.log();
+  reducers : {
+    addCount(state,action){
+      let num = state.findIndex((val) => { return val.id == action.payload})
+      state[num].count++;
+    },
+    
+    InCart(state,action) {
+      let item = {
+        id: action.payload.id,
+        name: action.payload.title,
+        count:1,
+      }
+      let number = state.findIndex((val) => { return val.id == action.payload.id})
+
+      if (number == -1) {
+        state.push(item);
+      } else {
+        state[number].count++;
+      }
+
+    },
+
+    removeCart(state,action) {
+      state.filter((v) => {return v.id != action.payload});
     }
   }
+
 })
 
-export let { Plus } = products.actions;
 
+export let { Plus } = products.actions;
+export let {addCount,InCart,removeCart} = products.actions;
 
 export default configureStore({
   reducer: { //여기에 state등록을 해야 컴포넌트들이 사용이 가능!

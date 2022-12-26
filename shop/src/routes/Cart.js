@@ -1,9 +1,10 @@
 import {Table} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeName, PlusAge, PlusAge2 } from '../store/userSlice';
-import { Plus } from '../store';
+import { addCount,removeCart } from '../store';
+import { useEffect } from 'react';
 
-function Cart() {
+function Cart() {  
 
     let state = useSelector((state) => {return state}) //store에 있는 state를 꺼내쓰는 것.
     let dispatch = useDispatch();
@@ -22,6 +23,7 @@ function Cart() {
                     <th>상품명</th>
                     <th>수량</th>
                     <th>변경하기</th>
+                    <th>삭제하기</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,10 +34,8 @@ function Cart() {
                                     <th>{product.id}</th>
                                     <th>{product.name}</th>
                                     <th>{product.count}</th>
-                                    <th><button onClick={() => 
-                                    //state 누르면 john kim 으로 변경하려면
-                                    dispatch(Plus())
-                                    }>+</button></th>
+                                    <th><button onClick={() => dispatch(addCount(product.id))}>+</button></th>
+                                    <th><button onClick={() => dispatch(removeCart(product.id))}>삭제</button></th>
                                 </tr>
                             )
                         })

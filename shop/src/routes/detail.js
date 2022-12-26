@@ -5,11 +5,13 @@ import { Nav } from 'react-bootstrap'
 
 
 import {Context1} from './../App.js'; //App.js에서 보관함 가져오기.
-
+import {InCart} from '../store';
+import { useDispatch } from 'react-redux';
 
 const Detail = (props) => {
 
     let {재고} = useContext(Context1) //state사용2. useContext(Context) 보관함을 해체해주는것. 변수를 써주거나, disturcting 해서 쓰면 됨. {재고, shoes}
+    const dispatch = useDispatch();
 
     useEffect(() => {
       setTimeout(() => {
@@ -68,7 +70,7 @@ const Detail = (props) => {
             <h4 className="pt-5">{props.shoes[keyId].title}</h4>
             <p>{props.shoes[keyId].content}</p>
             <p>{props.shoes[keyId].price}원</p>
-            <button className="btn btn-danger">주문하기</button>
+            <button className="btn btn-danger" onClick={() => {dispatch(InCart(props.shoes[keyId]))}}>주문하기</button>
           </div>
         </div>
 

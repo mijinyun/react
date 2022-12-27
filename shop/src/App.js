@@ -3,11 +3,17 @@ import { Navbar, Container, Nav } from 'react-bootstrap'
 import { createContext, useEffect, useState } from 'react';
 import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './routes/detail';
 import Product from './product';
-import Cart from './routes/Cart'
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { lazy,Suspense } from 'react';
+
+//lazy import : 필요해질때 import
+// import Detail from './routes/detail';
+// import Cart from './routes/Cart'
+const Detail = lazy(() => import('./routes/detail.js'));
+const Cart = lazy(() => import('./routes/Cart.js'));
+
 
 
 export let Context1 = createContext(); //셋팅1. context를 만들어주는 것 - context1 = state보관함.
@@ -89,12 +95,15 @@ function App() {
           <Route path='two' element={<h5>생일기념 쿠폰받기</h5>} />
         </Route>
         <Route path='/detail/:id' element={
-        <Context1.Provider value={{ 재고, shoes }}>
-          <Detail shoes={shoes}/> 
-          {/* 여기안의 모든 컴포넌트는 재고, shoes 사용가능해짐 */}
-        </Context1.Provider> //셋팅2. <Context>로 원하는 컴포넌트 감싸기
-        //셋팅3. value={{state1, state2...}} 이렇게 보내주면 됨.
-        } />
+          <Suspense fallback={<div>로딩중임</div>}>
+            <Context1.Provider value={{ 재고, shoes }}>
+              <Detail shoes={shoes}/> 
+                {/* 여기안의 모든 컴포넌트는 재고, shoes 사용가능해짐 */}
+            </Context1.Provider>
+          </Suspense>
+            //셋팅2. <Context>로 원하는 컴포넌트 감싸기
+            //셋팅3. value={{state1, state2...}} 이렇게 보내주면 됨.
+            } />
         <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<div>없는 페이지</div>}/>
       </Routes>

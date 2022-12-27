@@ -104,7 +104,11 @@ function App() {
             //셋팅2. <Context>로 원하는 컴포넌트 감싸기
             //셋팅3. value={{state1, state2...}} 이렇게 보내주면 됨.
             } />
-        <Route path='/cart' element={<Cart />} />
+            <Route path='/cart' element={
+            <Suspense fallback={<div>로딩중임</div>}>
+              <Cart />
+            </Suspense>
+          } />
         <Route path='*' element={<div>없는 페이지</div>}/>
       </Routes>
     </div>

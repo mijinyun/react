@@ -6,6 +6,8 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/detail';
 import Product from './product';
 import Cart from './routes/Cart'
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
 
 export let Context1 = createContext(); //셋팅1. context를 만들어주는 것 - context1 = state보관함.
@@ -24,6 +26,13 @@ function App() {
   let [재고] = useState([10,11,12]); //detail, tabContent에서 쓰고싶으면? - context api 써보기
   let navigate = useNavigate();
 
+  //react-query 이용해서 ajax요청
+  let result = useQuery('작명', () => {
+    return axios.get('https://codingapple1.github.io/userdata.json').then((a) => {
+      return a.data;
+    }),
+    { staleTime : 2000 } //타이머 기능.
+  })
   
 
   return (
@@ -37,6 +46,9 @@ function App() {
             <Nav.Link onClick={() => { navigate('/detail')}} >Detail</Nav.Link>
             <Nav.Link onClick={() => { navigate('/cart')}} >Cart</Nav.Link>
           </Nav>
+          <Nav className='ms-auto'>
+            { result.isLoading ? '로딩중입니다.' : result.data.name}
+            </Nav>
         </Container>
       </Navbar>
 
